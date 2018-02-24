@@ -1,0 +1,331 @@
+<!doctype html>
+<html lang="en">
+
+    <head>
+        <meta charset="utf-8">
+
+        <title>Advanced Linux Commands</title>
+
+        <meta name="description" content="GNU/Linux workshop">
+        <meta name="author" content="FOSSCell, NITC">
+
+        <meta name="apple-mobile-web-app-capable" content="yes" />
+        <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, minimal-ui">
+
+        <link rel="stylesheet" href="css/reveal.css">
+        <link rel="stylesheet" href="css/theme/black.css" id="theme">
+
+        <!-- Code syntax highlighting -->
+        <link rel="stylesheet" href="lib/css/zenburn.css">
+
+        <!-- Printing and PDF exports -->
+        <script>
+            var link = document.createElement( 'link' );
+            link.rel = 'stylesheet';
+            link.type = 'text/css';
+            link.href = window.location.search.match( /print-pdf/gi ) ? 'css/print/pdf.css' : 'css/print/paper.css';
+            document.getElementsByTagName( 'head' )[0].appendChild( link );
+        </script>
+
+        <!--[if lt IE 9]>
+        <script src="lib/js/html5shiv.js"></script>
+        <![endif]-->
+    </head>
+
+    <body>
+
+        <div class="reveal">
+
+            <!-- Any section element inside of this container is displayed as a slide -->
+            <div class="slides">
+                <section>
+                    <h1>BASH Scripting</h1>
+
+
+                    <!-- <p><font color=grey>By Prabhav Adhikari</font></p> -->
+
+                </section>
+
+                <section>
+                    <section>
+                        <h2>What is it</h2>
+                        <ul>
+                            <li>A set of commands that can be executed in terminal</li>
+                            <li>Should begin with the shebang line (#!/bin/bash)</li>
+                            <li>Bash scripts ends with <font color=orange>.sh</font></li>
+                        </ul>
+
+                    </section>
+                    <section>
+                        <h2>Variables</h2>
+                        <ul>
+                            <li>Store data and configuration options</li>
+                            <li>Declared with name followed by "=" and the value</li>
+                            <li>Call: Put <font color=orange>$</font> in front of the variable name, enclose the name in <font color=orange>{}</font> if directly followed by something else</li>
+                        </ul>
+                        </p><br>
+                        <h3>Examples</h3>
+                            <pre><code data-trim contenteditable>
+#!/bin/bash
+a=/home/web
+echo "My home folder is $a"
+echo "My data folder is ${a}/data"
+                            </code></pre>
+
+                        </font></p>
+                    </section>
+
+                    <section>
+                        <h2>Arrays</h2>
+                        <ul>
+                            <li>Arrays are variables containing multiple values</li>
+                            <li>Declared with name followed by "=()". Values are space separated.</li>
+                            <li>Values can be accessed by their index starting from 0</li>
+                        </ul>
+                        </p>
+                        <h3>Example</h3>
+                            <pre><code data-trim contenteditable>
+#!/bin/bash
+# declare a array variable color
+color=(red blue green)
+# print all elements of the array
+echo ${color[*]}
+# set 4th element of the array
+color[3]=yellow
+echo ${color[*]}
+# print third element of the array
+echo "The sunflower is ${color[2]}"
+# print the number of elements in array
+echo ${#color[*]}
+                            </code></pre>
+                    </section>
+
+                    <section>
+                        <h2>Variable Expansion</h2>
+                        <br>
+                        <p>Variable names are exapnded within double quotes, but not within single quotes.</p>
+                        <h3>Example</h3>
+                            <pre><code data-trim contenteditable>
+#!/bin/bash
+string="abcdefg"
+echo "$string"
+echo "\$string"
+echo '$string'
+
+echo $'\U1f60e'
+                            </code></pre>
+                    </section>
+                </section>
+
+                <section>
+                    <section>
+                        <h2>For Loop</h2>
+                        <p><font color='grey'><b>Repetition</b></font>
+                        </p
+                        <br><br>
+                        <pre><code data-trim contenteditable>
+for((i=1; i<=5; ++i)); do
+    echo ${i}
+done
+                            </code></pre>
+                        <!-- <p>Can be used to repeat certain tasks</p>
+                        <p><font color=green>5*5+3*23</font></p>
+                        <p>Use <font color=orange>last</font> to use last answer in your expression.
+                        <p></font> <font color=orange><i>last</i></font> * 2 - 1</p> -->
+                    </section>
+                </section>
+
+
+<!--
+                PIPE
+-->
+
+                <section>
+                    <section>
+                        <h2>Functions</h2>
+                        <pre><code data-trim contenteditable>
+#!/bin/bash
+function greeter() { echo "Hello ${USER}!"; }
+greeter
+                            </code></pre>
+
+                        <pre><code data-trim contenteditable>
+#!/bin/bash
+function greeter() { echo "Hello $1!"; }
+greeter "My Friend"
+                            </code></pre>
+
+
+                    </section>
+                </section>
+
+                <!-- GREP>< -->
+                <section>
+                    <section>
+                        <h2>Testing Conditions</h2>
+
+                        <ul>
+                            <li><font color=orange>[ ! &lt;expression&gt; ]</font> # expression is false</li>
+                            <li><font color=orange>[ &lt;expr1&gt; -a &lt;expr2&gt; ]</font> # both are true</li>
+                            <li><font color=orange>[ &lt;expr1&gt; -o &lt;expr2&gt; ]</font> # either is true</li>
+                            <li><font color=orange>[ -n &lt;string&gt; ]</font> # string length is nonzero</li>
+                            <li><font color=orange>[ -z &lt;string&gt; ]</font> # string length is zero</li>
+                            <li><font color=orange>[ &lt;string1&gt; = &lt;string2&gt; ]</font> # strings are equal</li>
+                            <li><font color=orange>[ &lt;string1&gt; != &lt;string2&gt; ]</font> # strings are not equal</li>
+                        </ul>
+
+
+                        <!-- <p>Used to search text for patterns specified by the user</p>
+                        <p>Basic Syntax:</p>
+                        <p></p><font color=green>grep </font> <font color=orange>&lt;pattern&gt;  &lt;file&gt;</font></p>
+                        <p>To see the occurances of 'is' in a file 'Intro.txt':<br>
+                            <font color=green>grep </font> <font color=orange>'is'  Intro.txt</font> </p> -->
+                    </section>
+
+                    <section>
+                        <h2>Testing Conditions</h2>
+
+                        <ul>
+                            <li><font color=orange>[ &lt;int1&gt; -eq &lt;int2&gt; ]</font> # integers are equal</li>
+                            <li><font color=orange>[ &lt;int1&gt; -ne &lt;int2&gt; ]</font> # integers are not equal</li>
+                            <li><font color=orange>[ &lt;int1&gt; -lt &lt;int2&gt; ]</font> # int1 is less than int2</li>
+                            <li><font color=orange>[ &lt;int1&gt; -le &lt;int2&gt; ]</font> # int1 is less or equal int2</li>
+                            <li><font color=orange>[ &lt;int1&gt; -gt &lt;int2&gt; ]</font> # int1 is greater than int2</li>
+                            <li><font color=orange>[ &lt;int1&gt; -ge &lt;int2&gt; ]</font> # int1 is greater or equal int2</li>
+                        </ul>
+
+
+                        <!-- <p>Used to search text for patterns specified by the user</p>
+                        <p>Basic Syntax:</p>
+                        <p></p><font color=green>grep </font> <font color=orange>&lt;pattern&gt;  &lt;file&gt;</font></p>
+                        <p>To see the occurances of 'is' in a file 'Intro.txt':<br>
+                            <font color=green>grep </font> <font color=orange>'is'  Intro.txt</font> </p> -->
+                    </section>
+
+                    <section>
+                        <h2>Testing Conditions</h2>
+
+                        <ul>
+                            <li><font color=orange>[ -e &lt;file&gt; ]</font> # file exists</li>
+                            <li><font color=orange>[ -f &lt;file&gt; ]</font> # file exists and is a regular file</li>
+                            <li><font color=orange>[ -L &lt;file&gt; ]</font> # file exists and is a symbolic link</li>
+                            <li><font color=orange>[ -d &lt;file&gt; ]</font> # file exists and is a directory</li>
+                            <li><font color=orange>[ -s &lt;file&gt; ]</font> # file exists and has size greater than 0</li>
+                            <li><font color=orange>[ -r &lt;file&gt; ]</font> # file exists and is readable</li>
+                            <li><font color=orange>[ -x &lt;file&gt; ]</font> # file exists and is executable</li>
+                        </ul>
+
+
+                        <!-- <p>Used to search text for patterns specified by the user</p>
+                        <p>Basic Syntax:</p>
+                        <p></p><font color=green>grep </font> <font color=orange>&lt;pattern&gt;  &lt;file&gt;</font></p>
+                        <p>To see the occurances of 'is' in a file 'Intro.txt':<br>
+                            <font color=green>grep </font> <font color=orange>'is'  Intro.txt</font> </p> -->
+                    </section>
+                </section>
+
+                <section>
+                <h2>Control Structures: if/elif/else/fi</h2>
+<pre><code data-trim contenteditable>
+#!/bin/bash
+function f() {
+    if [ $1 -lt 0 ]; then
+        echo "negative"
+    elif [ $1 -le 9 ]; then
+        echo "one digit"
+    elif [ $1 -le 99 ]; then
+        echo "two digits"
+    else
+        echo "large!"
+    fi
+}
+
+f 21345890
+                            </code></pre>
+                </section>
+
+                <section>
+                    <section>
+                        <h2>While Loop</h2>
+                        <p><font color='grey'><b>Repetition</b></font>
+                        </p
+                        <br><br>
+                        <pre><code data-trim contenteditable>
+#!/bin/bash
+
+count=10
+i=0
+
+while [ $i -lt $count ]; do
+   echo "$i"
+   i=$(($i+1))
+done
+                            </code></pre>
+                        <!-- <p>Can be used to repeat certain tasks</p>
+                        <p><font color=green>5*5+3*23</font></p>
+                        <p>Use <font color=orange>last</font> to use last answer in your expression.
+                        <p></font> <font color=orange><i>last</i></font> * 2 - 1</p> -->
+                    </section>
+                </section>
+
+
+                <section>
+                    <h2>This Presentation</h2>
+                    <p>It will be available on <a href="https://github.com/yashhere/Linux-Workshop">Github</a>. Refer for any doubts!</p>
+                </section>
+
+                <section style="text-align: left;">
+                    <h1>THE END</h1>
+                    <h3><a href="https://goo.gl/forms/QRKhjvQV6k0ULXeo2">Give us a Feedback!</a></h3>
+                    <!-- <h3>Have a look at this.</h3>
+                    <p>
+                        - <a href="http://assoc.cse.nitc.ac.in/">CSEA webpage</a> <br>
+                        - <a href="https://www.facebook.com/CSEA.NITC">CSEA facebook page</a>  <br>
+                        - <a href="http://icfoss.in/">ICFOSS</a> <br>
+                    </p> -->
+                    <h3>Reference Book</h3>
+                    <p>
+                        - <a href="http://linuxcommand.org/tlcl.php">The Linux Command Line</a> <br>
+                    </p>
+
+                </section>
+
+                <section>
+                    <a href="index.html#/1">let's go on</a>
+                </section>
+            </div>
+
+        </div>
+
+        <script src="lib/js/head.min.js"></script>
+        <script src="js/reveal.js"></script>
+
+        <script>
+
+            // Full list of configuration options available at:
+            // https://github.com/hakimel/reveal.js#configuration
+            Reveal.initialize({
+                controls: true,
+                progress: true,
+                history: true,
+                center: true,
+
+                transition: 'slide', // none/fade/slide/convex/concave/zoom
+
+                // Optional reveal.js plugins
+                dependencies: [
+                    { src: 'lib/js/classList.js', Conditions: function() { return !document.body.classList; } },
+                    { src: 'plugin/markdown/marked.js', Conditions: function() { return !!document.querySelector( '[data-markdown]' ); } },
+                    { src: 'plugin/markdown/markdown.js', Conditions: function() { return !!document.querySelector( '[data-markdown]' ); } },
+                    { src: 'plugin/highlight/highlight.js', async: true, Conditions: function() { return !!document.querySelector( 'pre code' ); }, callback: function() { hljs.initHighlightingOnLoad(); } },
+                    { src: 'plugin/zoom-js/zoom.js', async: true },
+                    { src: 'plugin/notes/notes.js', async: true }
+                ]
+            });
+
+        </script>
+
+    </body>
+</html>
